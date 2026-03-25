@@ -14,7 +14,7 @@ API_KEYS: list[str] | None = (
     else None
 )
 
-DEFAULT_MODEL = os.getenv("DEFAULT_MODEL", "qwen3-coder-plus")
+DEFAULT_MODEL = os.getenv("DEFAULT_MODEL", "coder-model")
 MAX_RETRIES = int(os.getenv("MAX_RETRIES", "5"))
 RETRY_DELAY_S = float(os.getenv("RETRY_DELAY_MS", "1000")) / 1000
 QWEN_CODE_AUTH_USE = os.getenv("QWEN_CODE_AUTH_USE", "true").lower() != "false"
