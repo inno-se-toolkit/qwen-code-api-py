@@ -22,7 +22,7 @@ COPY pyproject.toml uv.lock ./
 RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --frozen
 
-COPY qwen_code_api/ ./qwen_code_api/
+COPY app/ ./
 
 # ---
 # Stage 2: use a final image without uv
@@ -62,4 +62,4 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
     CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:${PORT:-8080}/health')" || exit 1
 
 ENTRYPOINT ["docker-entrypoint.sh"]
-CMD ["python", "-m", "qwen_code_api.main"]
+CMD ["python", "-m", "app.main"]

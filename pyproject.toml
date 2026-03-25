@@ -19,7 +19,7 @@ dev = [
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["qwen_code_api"]
+packages = ["app"]
 
 [build-system]
 requires = ["hatchling"]
@@ -62,7 +62,7 @@ cmd = "ruff format"
 # Tool configuration
 
 [tool.pyright]
-include = ["qwen_code_api"]
+include = ["app"]
 exclude = ["**/__pycache__", "**/node_modules", "**/.*", ".venv", ".direnv"]
 typeCheckingMode = "strict"
 reportAssignmentType = "none"
@@ -70,11 +70,11 @@ reportIncompatibleVariableOverride = "none"
 reportUnknownMemberType = "none"
 
 [tool.pytest.ini_options]
-pythonpath = ["qwen_code_api"]
+pythonpath = ["app"]
 asyncio_mode = "auto"
 
 [tool.ty.src]
-include = ["qwen_code_api"]
+include = ["app"]
 
 # TODO: remove after upgrading to ty>=0.0.26 (fixes ParamSpec, see https://github.com/astral-sh/ty/issues/1635)
 [tool.ty.rules]
