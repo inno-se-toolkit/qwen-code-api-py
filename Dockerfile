@@ -5,7 +5,7 @@
 # Stage 1: build the application in the `/app` directory.
 # ---
 
-ARG REGISTRY_PREFIX_DOCKER_HUB=harbor.pg.innopolis.university/docker-hub-cache/
+ARG REGISTRY_PREFIX_DOCKER_HUB
 FROM ${REGISTRY_PREFIX_DOCKER_HUB}astral/uv:python3.14-bookworm-slim AS builder
 ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy
 
@@ -28,7 +28,7 @@ COPY qwen_code_api/ ./qwen_code_api/
 # Stage 2: use a final image without uv
 # ---
 
-ARG REGISTRY_PREFIX_DOCKER_HUB=harbor.pg.innopolis.university/docker-hub-cache/
+ARG REGISTRY_PREFIX_DOCKER_HUB
 FROM ${REGISTRY_PREFIX_DOCKER_HUB}python:3.14.2-slim-bookworm
 
 # Set environment variables for Python and application
@@ -59,7 +59,7 @@ COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:${PORT:-8080}/health')" || exit 1
+    CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:${PORT:-8080}/health')" || exit 1
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["python", "-m", "qwen_code_api.main"]
