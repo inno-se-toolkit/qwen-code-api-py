@@ -69,7 +69,6 @@ exclude = [
     "**/.*",
     ".venv",
     ".direnv",
-    "nanobot/packages/**",
 ]
 typeCheckingMode = "strict"
 reportAssignmentType = "none"
@@ -77,19 +76,9 @@ reportIncompatibleVariableOverride = "none"
 reportUnknownMemberType = "none"
 
 [tool.pytest.ini_options]
-testpaths = ["backend/tests"]
-pythonpath = ["backend"]
 asyncio_mode = "auto"
 
 [tool.ty.src]
-include = [
-    "backend",
-    "client-telegram-bot",
-    "nanobot",
-    "mcp",
-    "qwen-code-api-py",
-]
-exclude = ["nanobot/packages/**"]
 
 # TODO: remove after upgrading to ty>=0.0.26 (fixes ParamSpec, see https://github.com/astral-sh/ty/issues/1635)
 [tool.ty.rules]
