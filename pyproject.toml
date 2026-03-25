@@ -1,5 +1,5 @@
 [project]
-name = "qwen-code-api-py"
+name = "qwen-code-api"
 version = "0.1.0"
 requires-python = ">=3.13"
 dependencies = [
