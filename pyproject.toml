@@ -76,9 +76,11 @@ reportIncompatibleVariableOverride = "none"
 reportUnknownMemberType = "none"
 
 [tool.pytest.ini_options]
+pythonpath = ["qwen_code_api"]
 asyncio_mode = "auto"
 
 [tool.ty.src]
+include = ["qwen_code_api"]
 
 # TODO: remove after upgrading to ty>=0.0.26 (fixes ParamSpec, see https://github.com/astral-sh/ty/issues/1635)
 [tool.ty.rules]
