@@ -4,6 +4,62 @@ from .config import DEFAULT_MODEL
 
 MODEL_ALIASES: dict[str, str] = {"qwen3.5-plus": "coder-model"}
 
+
+def is_auth_error(status: int | None, message: str) -> bool:
+    """Check if error is authentication-related (400/401/403/504 or auth message)."""
+    if status in (400, 401, 403, 504):
+        return True
+    msg_lower = message.lower()
+    return any(
+        x in msg_lower
+        for x in [
+            "unauthorized",
+            "forbidden",
+            "token expired",
+            "invalid api key",
+            "invalid access token",
+            "authentication",
+            "access denied",
+        ]
+    )
+
+
+def is_quota_error(status: int | None, message: str) -> bool:
+    """Check if error is quota/rate limit related (429 or quota message)."""
+    if status == 429:
+        return True
+    msg_lower = message.lower()
+    return any(
+        x in msg_lower
+        for x in [
+            "insufficient_quota",
+            "quota exceeded",
+            "rate limit",
+            "too many requests",
+        ]
+    )
+
+
+def is_validation_error(message: str) -> bool:
+    """Check if error is a validation error."""
+    return "validation error" in message.lower() or "invalid" in message.lower()
+
+
+def make_error_response(
+    message: str,
+    error_type: str = "api_error",
+    code: str | None = None,
+) -> dict[str, dict[str, str | int] | dict[str, str]]:
+    """Create OpenAI-compatible error response."""
+    error: dict[str, str | int] = {
+        "message": message,
+        "type": error_type,
+    }
+    if code:
+        error["code"] = code
+    return {"error": error}
+
+
 MODELS: list[dict[str, str | int]] = [
     {
         "id": "qwen3-coder-plus",
