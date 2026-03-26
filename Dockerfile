@@ -22,7 +22,7 @@ COPY pyproject.toml uv.lock ./
 RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --frozen
 
-COPY qwen_code_api/ ./
+COPY qwen_code_api/ ./qwen_code_api/
 
 # ---
 # Stage 2: use a final image without uv
