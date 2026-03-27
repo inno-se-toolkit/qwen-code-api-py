@@ -62,4 +62,4 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
     CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:${PORT:-8080}/health')" || exit 1
 
 ENTRYPOINT ["docker-entrypoint.sh"]
-CMD ["python", "-m", "qwen_code_api.main"]
+CMD ["opentelemetry-instrument", "python", "-m", "qwen_code_api.main"]

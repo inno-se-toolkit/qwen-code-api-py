@@ -1,23 +1,19 @@
-"""Structured JSON logger using loguru."""
+"""Structured event logger using standard logging."""
 
-import sys
+import logging
 from datetime import datetime, timezone
 
-from loguru import logger
-
-
-# Configure loguru for structured JSON output
-logger.remove()
-logger.add(
-    sys.stdout,
-    format="{message}",
-    serialize=True,
-    level="INFO",
-)
+logger = logging.getLogger(__name__)
 
 
 class LiveLogger:
-    """Structured JSON logger using loguru."""
+    """Structured event logger using standard logging."""
+
+    @staticmethod
+    def _emit(level: int, payload: dict[str, object]) -> None:
+        """Emit a single structured log record with extra attributes."""
+        event = str(payload.get("event", "event"))
+        logger.log(level, event, extra=payload)
 
     def proxy_request(
         self,
@@ -29,7 +25,8 @@ class LiveLogger:
         is_streaming: bool = False,
     ) -> None:
         """Log incoming proxy request."""
-        logger.info(
+        self._emit(
+            logging.INFO,
             {
                 "event": "request",
                 "timestamp": datetime.now(timezone.utc)
@@ -55,7 +52,8 @@ class LiveLogger:
         qwen_id: str | None = None,
     ) -> None:
         """Log proxy response."""
-        logger.info(
+        self._emit(
+            logging.INFO,
             {
                 "event": "response",
                 "timestamp": datetime.now(timezone.utc)
@@ -79,7 +77,8 @@ class LiveLogger:
         error_message: str,
     ) -> None:
         """Log proxy error."""
-        logger.error(
+        self._emit(
+            logging.ERROR,
             {
                 "event": "error",
                 "timestamp": datetime.now(timezone.utc)
@@ -94,7 +93,8 @@ class LiveLogger:
 
     def auth_initiated(self, device_code: str) -> None:
         """Log authentication initiated."""
-        logger.info(
+        self._emit(
+            logging.INFO,
             {
                 "event": "auth",
                 "timestamp": datetime.now(timezone.utc)
@@ -107,7 +107,8 @@ class LiveLogger:
 
     def auth_completed(self, account_id: str) -> None:
         """Log authentication completed."""
-        logger.info(
+        self._emit(
+            logging.INFO,
             {
                 "event": "auth",
                 "timestamp": datetime.now(timezone.utc)
@@ -120,7 +121,8 @@ class LiveLogger:
 
     def account_refreshed(self, account_id: str, status: str) -> None:
         """Log account token refresh."""
-        logger.info(
+        self._emit(
+            logging.INFO,
             {
                 "event": "auth",
                 "timestamp": datetime.now(timezone.utc)
@@ -134,7 +136,8 @@ class LiveLogger:
 
     def account_added(self, account_id: str) -> None:
         """Log account added."""
-        logger.info(
+        self._emit(
+            logging.INFO,
             {
                 "event": "auth",
                 "timestamp": datetime.now(timezone.utc)
@@ -147,7 +150,8 @@ class LiveLogger:
 
     def account_removed(self, account_id: str) -> None:
         """Log account removed."""
-        logger.info(
+        self._emit(
+            logging.INFO,
             {
                 "event": "auth",
                 "timestamp": datetime.now(timezone.utc)
@@ -160,7 +164,8 @@ class LiveLogger:
 
     def server_started(self, host: str, port: int) -> None:
         """Log server startup."""
-        logger.info(
+        self._emit(
+            logging.INFO,
             {
                 "event": "server",
                 "timestamp": datetime.now(timezone.utc)
@@ -174,7 +179,8 @@ class LiveLogger:
 
     def shutdown(self, reason: str) -> None:
         """Log server shutdown."""
-        logger.info(
+        self._emit(
+            logging.INFO,
             {
                 "event": "server",
                 "timestamp": datetime.now(timezone.utc)
