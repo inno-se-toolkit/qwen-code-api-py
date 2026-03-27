@@ -8,7 +8,8 @@ from typing import Any
 import httpx
 from pydantic import BaseModel
 
-from .config import settings, log
+from .config import settings
+from .logging_config import log
 
 
 class QwenCredentials(BaseModel):

@@ -10,8 +10,9 @@ from fastapi import APIRouter, Header, Request
 from fastapi.responses import JSONResponse, StreamingResponse
 
 from ..auth import AuthManager
-from ..config import settings, log
+from ..config import settings
 from ..headers import build_headers
+from ..logging_config import log
 from ..models import (
     clamp_max_tokens,
     is_auth_error,

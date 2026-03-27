@@ -9,9 +9,12 @@ from fastapi import FastAPI, Header, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
 from .auth import AuthManager
-from .config import settings, log
+from .config import settings
+from .logging_config import configure_logging, log
 from .routes import chat, health, models
 from .utils.live_logger import live_logger
+
+configure_logging()
 
 
 @asynccontextmanager
