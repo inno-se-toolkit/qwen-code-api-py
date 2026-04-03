@@ -237,6 +237,16 @@ Tell your agent:
 > 2. Grep `cli.js` in that package for `VERSION4 =` to get the OpenAI SDK version (`x-stainless-package-version`).
 > 3. Update `headers.py`: set the CLI version in `user-agent` and `x-dashscope-useragent` (format: `QwenCode/<version> (linux; x64)`), set the SDK version in `x-stainless-package-version`, and set `x-stainless-runtime-version` to the output of `node --version`.
 
+### Verify after updating
+
+After updating headers, run the comparison script to confirm the proxy's requests match the real client:
+
+```bash
+uv run poe compare-requests
+```
+
+This starts mitmdump, sends a request through both the proxy and the real Qwen Code CLI, and diffs the outgoing requests (URL, headers, body structure). Exit code 0 means no differences.
+
 ## Differences from Node.js Version
 
 This Python implementation maintains feature parity with the original Node.js version while leveraging Python's async capabilities:
