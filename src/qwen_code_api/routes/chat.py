@@ -117,7 +117,7 @@ async def chat_completions(
     body: dict[str, Any] = await request.json()
     is_streaming: bool = body.get("stream", False)
     model = resolve_model(body.get("model", settings.default_model))
-    max_tokens = clamp_max_tokens(model, body.get("max_tokens", 65536))
+    max_tokens = clamp_max_tokens(model, body.get("max_tokens", 32768))
 
     # Generate request ID and log request
     request_id = str(uuid.uuid4())
