@@ -7,20 +7,20 @@ from typing import Any
 
 from ..logging_config import log
 
-_SYSTEM_PROMPT: str | None = None
+_cached_system_prompt: str | None = None
 
 
 def _load_system_prompt() -> str:
-    global _SYSTEM_PROMPT
-    if _SYSTEM_PROMPT is not None:
-        return _SYSTEM_PROMPT
+    global _cached_system_prompt
+    if _cached_system_prompt is not None:
+        return _cached_system_prompt
 
     path = Path.cwd() / "sys-prompt.txt"
     try:
-        _SYSTEM_PROMPT = path.read_text().strip()
+        _cached_system_prompt = path.read_text().strip()
     except FileNotFoundError:
-        _SYSTEM_PROMPT = ""
-    return _SYSTEM_PROMPT
+        _cached_system_prompt = ""
+    return _cached_system_prompt
 
 
 def _add_cache_control(message: dict[str, Any]) -> dict[str, Any]:
