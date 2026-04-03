@@ -146,7 +146,7 @@ The proxy supports Qwen models available through your Qwen Code OAuth account:
 
 | Model ID      | Description                   | Max Tokens | Notes                             |
 | ------------- | ----------------------------- | ---------- | --------------------------------- |
-| `coder-model` | Qwen3.5-Plus (via OAuth free) | 65536      | **Only model available for free** |
+| `coder-model` | Qwen3.5-Plus (via OAuth free) | 32000      | **Only model available for free** |
   
 **Note**: With free OAuth authentication, only `coder-model` is available. The proxy passes through whatever models your Qwen account has access to. Use `/model` in Qwen Code CLI to see available models for your account.
 
@@ -183,6 +183,9 @@ uv run poe check
 
 # Run tests
 uv run pytest
+
+# Compare proxy requests against real Qwen Code CLI (requires mitmproxy + qwen CLI)
+uv run poe compare-requests
 ```
 
 ## Important Notes
@@ -215,7 +218,7 @@ When a new version of Qwen Code is released, you need to update the request head
 
 3. **Send a chat message** in the Qwen Code CLI so it makes an API request.
 
-4. **Copy the headers** from the mitmweb UI (`http://127.0.0.1:8081`) — look for requests to `dashscope.aliyuncs.com`. The relevant headers to update are:
+4. **Copy the headers** from the mitmweb UI (`http://127.0.0.1:8081`) — look for requests to `portal.qwen.ai`. The relevant headers to update are:
 
     - `user-agent` — contains the Qwen Code version (e.g. `QwenCode/0.14.0`)
     - `x-dashscope-useragent` — same version string
