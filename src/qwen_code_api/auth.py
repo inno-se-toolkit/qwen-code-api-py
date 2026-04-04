@@ -9,6 +9,7 @@ import httpx
 from pydantic import BaseModel
 
 from .config import settings
+from .headers import USER_AGENT
 from .logging_config import log
 
 
@@ -68,7 +69,7 @@ class AuthManager:
             headers={
                 "Content-Type": "application/x-www-form-urlencoded",
                 "Accept": "application/json",
-                "User-Agent": "QwenCode/0.14.0 (linux; x64)",
+                "User-Agent": USER_AGENT,
             },
         )
         if resp.status_code != 200:

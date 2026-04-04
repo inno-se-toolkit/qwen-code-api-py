@@ -11,6 +11,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from .auth import AuthManager
 from .config import settings
+from .headers import USER_AGENT
 from .logging_config import configure_logging, log
 from .routes import chat, health, models
 from .utils.live_logger import live_logger
@@ -23,7 +24,7 @@ async def lifespan(_app: FastAPI) -> AsyncIterator[None]:
     _app.state.auth = AuthManager()
     _app.state.http_client = httpx.AsyncClient(
         timeout=httpx.Timeout(300, connect=10),
-        headers={"User-Agent": "qwen-code/0.12.2"},
+        headers={"User-Agent": USER_AGENT},
     )
     _app.state.request_count = 0
     _app.state.session_id = str(uuid.uuid4())

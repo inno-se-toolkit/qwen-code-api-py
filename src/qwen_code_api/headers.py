@@ -1,5 +1,7 @@
 """DashScope request headers that mimic the Qwen Code client."""
 
+USER_AGENT = "QwenCode/0.14.0 (linux; x64)"
+
 
 def build_headers(access_token: str, *, streaming: bool = False) -> dict[str, str]:
     return {
@@ -7,10 +9,10 @@ def build_headers(access_token: str, *, streaming: bool = False) -> dict[str, st
         "accept": "text/event-stream" if streaming else "application/json",
         "authorization": f"Bearer {access_token}",
         "content-type": "application/json",
-        "user-agent": "QwenCode/0.14.0 (linux; x64)",
+        "user-agent": USER_AGENT,
         "x-dashscope-authtype": "qwen-oauth",
         "x-dashscope-cachecontrol": "enable",
-        "x-dashscope-useragent": "QwenCode/0.14.0 (linux; x64)",
+        "x-dashscope-useragent": USER_AGENT,
         "x-stainless-arch": "x64",
         "x-stainless-lang": "js",
         "x-stainless-os": "Linux",
